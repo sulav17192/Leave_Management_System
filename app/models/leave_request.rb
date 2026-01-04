@@ -12,4 +12,6 @@ class LeaveRequest < ApplicationRecord
   def set_default_status
     self.status ||= "pending"
   end
+
+  scope :approved, -> { where(status: "approved") }
 end
