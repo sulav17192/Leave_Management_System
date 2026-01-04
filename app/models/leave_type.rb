@@ -3,5 +3,5 @@ class LeaveType < ApplicationRecord
   has_many :leave_requests
 
   validates :name, presence: true, uniqueness: true
-  validates :description
+  validates :description, length: {maximum: 500}
 end
