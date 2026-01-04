@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_04_110902) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_04_115957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,8 +36,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_110902) do
     t.datetime "created_at", null: false
     t.bigint "employee_id", null: false
     t.integer "leave_type"
+    t.bigint "leave_type_id", null: false
     t.datetime "updated_at", null: false
     t.index ["employee_id"], name: "index_leave_balances_on_employee_id"
+    t.index ["leave_type_id"], name: "index_leave_balances_on_leave_type_id"
   end
 
   create_table "leave_requests", force: :cascade do |t|
@@ -45,10 +47,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_110902) do
     t.bigint "employee_id", null: false
     t.date "end_date"
     t.integer "leave_type"
+    t.bigint "leave_type_id", null: false
     t.date "start_date"
     t.string "status"
     t.datetime "updated_at", null: false
     t.index ["employee_id"], name: "index_leave_requests_on_employee_id"
+    t.index ["leave_type_id"], name: "index_leave_requests_on_leave_type_id"
   end
 
   create_table "leave_types", force: :cascade do |t|
@@ -60,5 +64,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_110902) do
 
   add_foreign_key "employees", "departments"
   add_foreign_key "leave_balances", "employees"
+  add_foreign_key "leave_balances", "leave_types"
   add_foreign_key "leave_requests", "employees"
+  add_foreign_key "leave_requests", "leave_types"
 end
